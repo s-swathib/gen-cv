@@ -14,7 +14,7 @@ var system_prompt = `You are an AI assistant focused on delivering brief product
 
 const TTSVoice = "en-US-JennyMultilingualNeural" // Update this value if you want to use a different voice
 
-const CogSvcRegion = "westeurope" // Fill your Azure cognitive services region here, e.g. westus2
+const CogSvcRegion = "eastus" // Fill your Azure cognitive services region here, e.g. westus2
 
 const IceServerUrl = "turn:relay.communication.microsoft.com:3478" // Fill your ICE server URL here, e.g. turn:turn.azure.com:3478
 let IceServerUsername
@@ -52,13 +52,13 @@ function removeDocumentReferences(str) {
 // Setup WebRTC
 function setupWebRTC() {
   // Create WebRTC peer connection
-  fetch("/api/getIceServerToken", {
-    method: "POST"
-  })
-    .then(response => response.json())
-    .then(response => { 
-      IceServerUsername = response.username
-      IceServerCredential = response.credential
+  //fetch("/api/getIceServerToken", {
+    //method: "POST"
+  //})
+    //.then(response => response.json())
+    //.then(response => { 
+      IceServerUsername = "BQAANmXAyIAB2iE0CgIjuChTUuN6ju7NH2owrtXiS1AAAAAMARBLzcgb+8ZGv7VTu51ROGIsrn3j1xkOsVZBYYwYaz6M5IQwJe4="
+      IceServerCredential = "33qDidv0KCP3VDTvpWZCeSaDq2Y="
 
       peerConnection = new RTCPeerConnection({
         iceServers: [{
