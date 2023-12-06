@@ -172,7 +172,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     }
 
     return func.HttpResponse(
-        json.dumps(response_object),
+        json.dumps(messages),
         status_code=200
     )
 
