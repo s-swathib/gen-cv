@@ -101,7 +101,7 @@ functions = [
 ]
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
-    logging.info('Python HTTP trigger function processed a request.')
+    print('Python HTTP trigger function processed a request.')
 
     messages = json.loads(req.get_body())
 
@@ -112,7 +112,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     try:
         response_message = response["choices"][0]["message"]
     except:
-        logging.info(response)
+        print(response)
 
     # if the model wants to call a function
     if response_message.get("function_call"):
@@ -164,7 +164,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     messages.append({'role' : response_message['role'], 'content' : response_message['content']})
 
-    logging.info(json.dumps(response_message))
+    print(json.dumps(response_message))
 
     response_object = {
         "messages": messages,
