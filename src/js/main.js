@@ -117,7 +117,7 @@ function setupWebRTC() {
       peerConnection.createOffer().then(sdp => {
         peerConnection.setLocalDescription(sdp).then(() => { setTimeout(() => { connectToAvatarService() }, 1000) })
       }).catch(console.log)
-    })  
+ 
 }
 
 async function generateText(prompt) {
