@@ -105,6 +105,16 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     messages = json.loads(req.get_body())
 
+    response_object = {
+        "messages": 'test',
+        "products": ['test']
+    }
+
+    return func.HttpResponse(
+        json.dumps(response_object),
+        status_code=200
+    )
+
     response = chat_complete(messages, functions= functions, function_call= "auto")
 
     products = []
@@ -172,10 +182,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     }
     
 
-    return func.HttpResponse(
-        json.dumps(response_object),
-        status_code=200
-    )
+    
 
 def execute_sql_query(query, connection_string=database_connection_string, params=None):
     """Execute a SQL query and return the results."""
