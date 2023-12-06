@@ -105,16 +105,6 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     messages = json.loads(req.get_body())
 
-    response_object = {
-        "messages": 'test',
-        "products": ['test']
-    }
-
-    return func.HttpResponse(
-        json.dumps(response_object),
-        status_code=200
-    )
-
     response = chat_complete(messages, functions= functions, function_call= "auto")
 
     products = []
@@ -123,6 +113,16 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         response_message = response["choices"][0]["message"]
     except:
         print(response)
+
+    response_object = {
+        "messages": response_message,
+        "products": ['test']
+    }
+
+    return func.HttpResponse(
+        json.dumps(response_object),
+        status_code=200
+    )
 
     # if the model wants to call a function
     if response_message.get("function_call"):
