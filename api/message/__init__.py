@@ -107,7 +107,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     response = chat_complete(messages, functions= functions, function_call= "auto")
 
-    products = ['test']
+    products = []
     
     try:
         response_message = response["choices"][0]["message"]
@@ -170,6 +170,8 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         "messages": messages,
         "products": products
     }
+
+    test_dict={"test": "test"}
 
     return func.HttpResponse(
         json.dumps(response_object),
