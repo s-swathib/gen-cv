@@ -271,8 +271,11 @@ window.speak = (text) => {
       .then(response => response.text())
       .then(async language => {
         console.log(`Detected language: ${language}`);
+        console.log(`Sending this input to the generateText function: ${text}`);
 
         const generatedResult = await generateText(text);
+
+        console.log(`Called generatetext function sucessfully`);
         
         let spokenTextssml = `<speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xmlns:mstts='https://www.w3.org/2001/mstts' xml:lang='en-US'><voice xml:lang='en-US' xml:gender='Female' name='en-US-JennyMultilingualNeural'><lang xml:lang="${language}">${generatedResult}</lang></voice></speak>`
 
