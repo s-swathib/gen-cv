@@ -170,11 +170,10 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         "messages": messages,
         "products": products
     }
-
-    test_dict={"test": "test"}
+    
 
     return func.HttpResponse(
-        json.dumps(test_dict),
+        json.dumps(response_object),
         status_code=200
     )
 
