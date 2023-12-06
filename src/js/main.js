@@ -130,7 +130,7 @@ async function generateText(prompt) {
   let generatedText
   let products
   console.log(`Input Message: ${JSON.stringify(messages)}`);
-  await fetch(`/api/message`, { method: 'POST', mode: 'cors', headers: { 'Content-Type': 'application/json'}, body: JSON.stringify(messages) })
+  await fetch(`/api/message`, { method: 'POST', mode: 'cors', referrerPolicy: "no-referrer", headers: { 'Content-Type': 'application/json'}, body: JSON.stringify(messages) })
   .then(response => response.text()) 
   .then(data => console.log(data)); 
 
