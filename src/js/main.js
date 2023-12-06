@@ -132,7 +132,7 @@ async function generateText(prompt) {
   console.log(`Input Message: ${JSON.stringify(messages)}`);
   await fetch(`/api/message`, { method: 'POST', mode: 'cors', referrerPolicy: "no-referrer", headers: { 'Content-Type': 'application/json'}, body: JSON.stringify(messages) })
   .then(response => response.text()) 
-  .then(data => console.log(data)); 
+  .then(data => console.log("response back: " + data)); 
 
   addToConversationHistory(generatedText, 'light');
   if(products.length > 0) {
