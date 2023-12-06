@@ -130,9 +130,13 @@ async function generateText(prompt) {
   let generatedText
   let products
   console.log(`Input Message: ${JSON.stringify(messages)}`);
-  await fetch(`/api/message`, { method: 'POST', mode: 'cors', referrerPolicy: "no-referrer", headers: { 'Content-Type': 'application/json'}, body: JSON.stringify(messages) })
+  await fetch(`/api/message`, { method: 'POST', headers: { 'Content-Type': 'application/json'}, body: JSON.stringify(messages) })
   .then(response => response.text()) 
-  .then(data => console.log("response back: " + data)); 
+  .then(data => {
+    generatedText = data["messages"][data["messages"].length - 1].content;
+    messages = data["messages"];
+    products = data["products"]
+  });
 
   addToConversationHistory(generatedText, 'light');
   if(products.length > 0) {
