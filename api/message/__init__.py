@@ -174,7 +174,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     test_dict={"test": "test"}
 
     return func.HttpResponse(
-        json.dumps(response_object),
+        json.dumps(test_dict),
         status_code=200
     )
 
