@@ -1,66 +1,62 @@
-# Vision AI Solution Accelerator
+# Shop Easily Using Talking Avatar - Trailblazers Outdoor Gear
 
-<img src="./media/gen-cv.png" alt="drawing" style="width:1200px;"/>
+<img src="./demo-screenshot.png" alt="drawing" style="width:1200px;"/>
 
-This repository serves as a rich resource offering numerous examples of synthetic image generation, manipulation, and reasoning. Utilizing Azure Machine Learning, Computer Vision, OpenAI, and widely acclaimed open-source frameworks like Stable Diffusion, it equips users with practical insights into the application of these powerful tools in the realm of image processing.
+This solution accelerator can be used to deploy an application that offers an interative shopping experience using a talking avatar. It uses Azure OpenAI combined with data stored on Cognitive Search and Azure SQL to generate answers.
 
-### Content
+## Getting started
 
-- 🆕 [Create engagaing Avatar Videos](avatar/video/README.md)
-- 🆕 [Create interactive Avatar Experiences](avatar/interactive/readme.md)
-- [Stable Diffusion XL with Azure Machine Learning](sdxl-azureml/sdxl-on-azureml.ipynb)
-- [Azure Computer Vision in a Day Workshop](azure_computer_vision_workshop/README.md)
-- [Explore the OpenAI DALL E-2 API](dalle2-api/DALLE2-api-intro.ipynb)
-- [Create images with the Azure OpenAI DALL E-2 API](dalle2-api/Florence-AOAI-DALLE2.ipynb)
-- [Remove background from images using the Florence foundation model](dalle2-api/Remove-background.ipynb)
-- [Precise Inpainting with Segment Anything, DALLE-2 and Stable Diffusion](dalle2-api/DALLE2-Segment-Anything-edits.ipynb)
-- [Add custom objects and styles to image generation models with Dreambooth](generation-finetuning/README.md)
-- [Create and find images with Stable Diffusion and Florence Vector Search](image-embeddings/generate-and-search-images.ipynb)
-- [Manage image embeddings with the Cognitive Search Vector Store](image-embeddings/image-search-embeddings.ipynb)
+1. This application can be deployed using [Azure Static Web Apps](https://docs.microsoft.com/azure/static-web-apps/overview). Start by forking this repo and using the [quickstart](https://docs.microsoft.com/azure/static-web-apps/getting-started?tabs=vanilla-javascript) to build the application. This application is using no front-end frameworks.
 
-### Getting Started
-The code within this repository has been tested on both __Github Codespaces__ compute and an __Azure Machine Learning Compute Instance__. Although the use of a GPU is not a requirement, it is highly recommended if you aim to generate a large number of sample images using Stable Diffusion.
+3. Create the following Azure resources: 
+- Azure OpenAI Service with these models deployed
+  - gpt-35-turbo (version 0613 or higher)
+  - text-embedding-ada-002 (verson 2)
+- Azure Cognitive Search with default settings
+- Azure SQL with the following settings
+  - Authentication: SQL and Microsoft Entra authentication enabled
+  - Networking: Allow Azure services and resources to access this server enabled
+- Azure Speech Service
+- Azure AI services multi-service account
+- [Azure Communication Services](https://learn.microsoft.com/en-us/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp#create-azure-communication-services-resource)
+- Azure Speech Service
+- Azure Blob Storage account
 
-Follow these steps to get started:
+3. Upload the images in the `product-images` directory to a blob container in the Storage Account. Generate a SAS url for the blob storage container. We will need this in a later step.
 
-1.  Clone this repository on your preferred compute using the following command:  
-```bash
-git clone https://github.com/Azure/gen-cv.git
+4. Create a file named `local.settings.json` in the `api` directory of the repository. Make sure to add the following variables to `local.settings.json`, and publish them to the application settings. More details on configuring application settings for Azure Static Web Apps can be found [here](https://learn.microsoft.com/en-us/azure/static-web-apps/application-settings). The `AzureWebJobsStorage` variable can be left empty for development purposes.
+
 ```
-
-2. Create your Python environment and install the necessary dependencies. For our development, we utilized Conda. You can do the same with these commands:
-
-```bash
-conda create -n gen-cv python=3.10
-conda activate gen-cv
-pip install -r requirements.txt
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "",
+    "FUNCTIONS_WORKER_RUNTIME": "python",
+    "AZURE_OPENAI_ENDPOINT": "https://XXX.openai.azure.com/",
+    "AZURE_OPENAI_API_KEY": "XXX",
+    "AZURE_OPENAI_CHAT_DEPLOYMENT" : "gpt-35-turbo-16k",
+    "AZURE_OPENAI_EMBEDDINGS_DEPLOYMENT" : "text-embedding-ada-002",
+    "AZURE_OPENAI_API_VERSION" : "2023-07-01-preview",
+    "AZURE_SEARCH_ENDPOINT": "https://XXX.search.windows.net",
+    "AZURE_SEARCH_API_KEY": "XXX",
+    "AZURE_SEARCH_INDEX": "products",
+    "AZURE_SPEECH_REGION": "westeurope",
+    "AZURE_SPEECH_API_KEY": "XXX",
+    "TEXT_ANALYTICS_ENDPOINT": "XXX",
+    "TEXT_ANALYTICS_KEY": "XXX",
+    "BLOB_SAS_URL": "https://XXX",
+    "SQL_DB_SERVER": "XXX.database.windows.net",
+    "SQL_DB_USER": "XXX",
+    "SQL_DB_PASSWORD": "XXX",
+    "SQL_DB_NAME": "OutdoorEquipmentShop",
+    "ICE_CONNECTION_STRING": "XXX"
+  }
+}
 ```
+5. In case you are using an Azure Speech Services instance in a region different from `westeurope`, update line 17 the `main.js` in the `src/js` folder to reflect that.
 
-3. From the list provided above, select a sample notebook. After making your selection, configure the Jupyter notebook to use the kernel associated with the environment you set up in Step 2.
-4. Copy the `.env.template` file to `.env` to store your parameters:
-```bash
-cp .env.template .env
-```
-5. Add the required parameters and keys for your services to the `.env` file.
+6. Run the cells in `create-index-and-database.ipynb` notebook to upload the product data to Azure Cognitive Search and the Azure SQL Database.
 
-## Contributing
+6. For running the app locally, make sure to have ODBC Driver 17 for SQL Server installed.
 
-This project welcomes contributions and suggestions.  Most contributions require you to agree to a
-Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
-the rights to use your contribution. For details, visit https://cla.opensource.microsoft.com.
-
-When you submit a pull request, a CLA bot will automatically determine whether you need to provide
-a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions
-provided by the bot. You will only need to do this once across all repos using our CLA.
-
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
-contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
-
-## Trademarks
-
-This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft 
-trademarks or logos is subject to and must follow 
-[Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general).
-Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship.
-Any use of third-party trademarks or logos are subject to those third-party's policies.
+7. Run the application locally using the following command: `swa start src --api-location api`.
