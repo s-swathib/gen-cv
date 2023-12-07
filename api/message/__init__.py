@@ -214,10 +214,8 @@ def get_bonus_points(account_id):
     try:
         results = execute_sql_query(query, params=(account_id,))
         return results
-    except Exception as e:
-        return e
-    finally:
-        return 'test'
+    except:
+        return 'failed'
 
 
     # If results are empty, return an error message in JSON format
