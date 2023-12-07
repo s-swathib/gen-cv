@@ -164,6 +164,12 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         
         response_message = response["choices"][0]["message"]
 
+    response_object={"messages":function_response}
+    
+    return func.HttpResponse(
+        json.dumps(response_object),
+        status_code=200
+    )
     messages.append({'role' : response_message['role'], 'content' : response_message['content']})
 
     logging.info(json.dumps(response_message))
@@ -173,10 +179,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         "products": products
     }
 
-    return func.HttpResponse(
-        json.dumps(response_object),
-        status_code=200
-    )
+    
     
 
     
