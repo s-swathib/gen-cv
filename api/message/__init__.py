@@ -133,6 +133,16 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         function_response = function_to_call(**function_args)
         # print(function_name, function_args)
 
+        response_object = {
+        "messages": function_response,
+        "products": products
+        }
+
+        return func.HttpResponse(
+            json.dumps(response_object),
+            status_code=200
+        )
+
         # Add the assistant response and function response to the messages
         messages.append({
             "role": response_message["role"],
@@ -169,15 +179,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     #logging.info(json.dumps(response_message))
 
-    response_object = {
-        "messages": messages,
-        "products": products
-    }
-
-    return func.HttpResponse(
-        json.dumps(response_object),
-        status_code=200
-    )
+    
     
 
 def execute_sql_query(query, connection_string=database_connection_string, params=None):
