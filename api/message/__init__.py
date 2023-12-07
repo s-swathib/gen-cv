@@ -221,7 +221,7 @@ def get_bonus_points(account_id):
         results = execute_sql_query(query, params=(account_id,))
         return results+'this'
     except:
-        return 'failed'
+        return 'query: {} failed'.format(query)
 
 
     # If results are empty, return an error message in JSON format
