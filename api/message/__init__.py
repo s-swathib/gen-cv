@@ -184,11 +184,8 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
 def execute_sql_query(query, connection_string=database_connection_string, params=None):
     """Execute a SQL query and return the results."""
-    return 'success'
-    results = []
-    logging.info('database_connection_string', database_connection_string)
-
     
+    results = []
     
     # Establish the connection
     with pyodbc.connect(connection_string) as conn:
@@ -205,6 +202,7 @@ def execute_sql_query(query, connection_string=database_connection_string, param
             
         conn.commit()
 
+    return results
 
 def get_bonus_points(account_id):
     """Retrieve bonus points and its cash value for a given account ID."""
