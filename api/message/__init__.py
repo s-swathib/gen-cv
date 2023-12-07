@@ -213,6 +213,7 @@ def get_bonus_points(account_id):
     # Execute the query with account_id as a parameter
     try:
         results = execute_sql_query(query, params=(account_id,))
+        return results
     except Exception as e:
         return e
 
