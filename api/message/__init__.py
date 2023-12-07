@@ -133,6 +133,9 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         function_response = function_to_call(**function_args)
         # print(function_name, function_args)
 
+        if function_response == None:
+            function_response='none'
+
         response_object = {
         "messages": function_response,
         "products": products
