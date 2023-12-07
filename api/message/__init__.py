@@ -190,7 +190,6 @@ def execute_sql_query(query, connection_string=database_connection_string, param
         # Establish the connection
         with pyodbc.connect(connection_string) as conn:
             cursor = conn.cursor()
-            return 'CusrsorSuccess'
                 
             if params:
                 cursor.execute(query, params)
