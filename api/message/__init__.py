@@ -199,7 +199,7 @@ def execute_sql_query(query, connection_string=database_connection_string, param
             if query.strip().upper().startswith('SELECT'):
                 try:
                     results = cursor.fetchall()
-                    return results[0]
+                    return ' ,'.join(results[0])
                 except Exception as e:
                     return e
                 
