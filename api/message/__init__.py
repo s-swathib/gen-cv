@@ -199,11 +199,12 @@ def execute_sql_query(query, connection_string=database_connection_string, param
             if query.strip().upper().startswith('SELECT'):
                 try:
                     results = cursor.fetchall()
+                    return 'Cursor Ran'
                 except Exception as e:
                     return e
                 
             conn.commit()
-        return results
+
     except Exception as ex:
         sqlstate = ex.args[0]
         return sqlstate
@@ -219,9 +220,9 @@ def get_bonus_points(account_id):
     # Execute the query with account_id as a parameter
     try:
         results = execute_sql_query(query, params=(account_id,))
-        return results+'this'
+        return results
     except:
-        return 'query: {} failed'.format(query)
+        return 'query failed'
 
 
     # If results are empty, return an error message in JSON format
