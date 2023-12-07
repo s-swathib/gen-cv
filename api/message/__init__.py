@@ -186,10 +186,11 @@ def execute_sql_query(query, connection_string=database_connection_string, param
     """Execute a SQL query and return the results."""
     results = []
     logging.info('database_connection_string', database_connection_string)
+
+    return 'success'
     
     # Establish the connection
     with pyodbc.connect(connection_string) as conn:
-        return 'success'
         cursor = conn.cursor()
             
         if params:
