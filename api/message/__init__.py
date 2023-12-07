@@ -116,6 +116,16 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     except:
         logging.info(response)
 
+    response_object = {
+        "messages": response_message,
+        "products": products
+        }
+
+    return func.HttpResponse(
+            json.dumps(response_object),
+            status_code=200
+        )
+
     # if the model wants to call a function
     if response_message.get("function_call"):
         # Call the function. The JSON response may not always be valid so make sure to handle errors
@@ -132,19 +142,6 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         function_args = json.loads(response_message["function_call"]["arguments"])
         function_response = function_to_call(**function_args)
         # print(function_name, function_args)
-
-        if function_response == None:
-            function_response='none'
-
-        response_object = {
-        "messages": function_response,
-        "products": products
-        }
-
-        return func.HttpResponse(
-            json.dumps(response_object),
-            status_code=200
-        )
 
         # Add the assistant response and function response to the messages
         messages.append({
