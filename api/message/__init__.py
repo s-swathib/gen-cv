@@ -203,8 +203,7 @@ def execute_sql_query(query, connection_string=database_connection_string, param
             results = cursor.fetchall()
             
         conn.commit()
-
-    return results
+        
 
 def get_bonus_points(account_id):
     """Retrieve bonus points and its cash value for a given account ID."""
