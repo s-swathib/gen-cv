@@ -132,7 +132,12 @@ async function generateText(prompt) {
   console.log(`Input Message: ${JSON.stringify(messages)}`);
   await fetch(`/api/message`, { method: 'POST', headers: { 'Content-Type': 'application/json'}, body: JSON.stringify(messages) })
   .then(response => response.json())
-  .then(console.log);
+  .then(data => {
+    generatedText = data["messages"][data["messages"].length - 1].content;
+    messages = data["messages"];
+    products = data["products"]
+  });
+  //.then(console.log);
 
   addToConversationHistory(generatedText, 'light');
   if(products.length > 0) {
