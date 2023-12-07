@@ -188,24 +188,23 @@ def execute_sql_query(query, connection_string=database_connection_string, param
     logging.info('database_connection_string', database_connection_string)
     
     # Establish the connection
-    try:
-        with pyodbc.connect(connection_string) as conn:
-            cursor = conn.cursor()
+    with pyodbc.connect(connection_string) as conn:
+        cursor = conn.cursor()
             
-            if params:
-                cursor.execute(query, params)
-            else:
-                cursor.execute(query)
-            
-            # If the query is a SELECT statement, fetch results
-            if query.strip().upper().startswith('SELECT'):
-                results = cursor.fetchall()
-            
-            conn.commit()
+        if params:
+            cursor.execute(query, params)
+        else:
+            cursor.execute(query)
 
-        return results
-    except Exception as e:
-        return e
+        return 'success'
+            
+        # If the query is a SELECT statement, fetch results
+        if query.strip().upper().startswith('SELECT'):
+            results = cursor.fetchall()
+            
+        conn.commit()
+
+    return results
 
 def get_bonus_points(account_id):
     """Retrieve bonus points and its cash value for a given account ID."""
