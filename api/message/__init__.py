@@ -134,8 +134,8 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         # print(function_name, function_args)
 
         response_object = {
-        "messages": function_response,
-        "products": products
+            "messages": function_response,
+            "products": products
         }
 
         return func.HttpResponse(
@@ -216,6 +216,8 @@ def get_bonus_points(account_id):
         return results
     except Exception as e:
         return e
+    finally:
+        return 'test'
 
 
     # If results are empty, return an error message in JSON format
