@@ -138,6 +138,8 @@ async function generateText(prompt) {
     products = data["products"]
   });
   //.then(console.log);
+  console.log("Product Data: " + products);
+  console.log("Messages Data: " + messages);
 
   addToConversationHistory(generatedText, 'light');
   if(products.length > 0) {
