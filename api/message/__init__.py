@@ -197,8 +197,8 @@ def execute_sql_query(query, connection_string=database_connection_string, param
                 cursor.execute(query)
             # If the query is a SELECT statement, fetch results
             if query.strip().upper().startswith('SELECT'):
+                return 'inside select'
                 results = cursor.fetchall()
-                return results
                 
             conn.commit()
         return results
