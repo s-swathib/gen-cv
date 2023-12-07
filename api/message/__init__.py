@@ -166,24 +166,18 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     
     messages.append({'role' : response_message['role'], 'content' : response_message['content']})
-    
-    response_object={"messages":messages,"products":products}
-    
-    return func.HttpResponse(
-        json.dumps(response_object),
-        status_code=200
-    )
 
-    logging.info(json.dumps(response_message))
+    #logging.info(json.dumps(response_message))
 
     response_object = {
         "messages": messages,
         "products": products
     }
 
-    
-    
-
+    return func.HttpResponse(
+        json.dumps(response_object),
+        status_code=200
+    )
     
 
 def execute_sql_query(query, connection_string=database_connection_string, params=None):

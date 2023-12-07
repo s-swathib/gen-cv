@@ -141,6 +141,7 @@ async function generateText(prompt) {
 
   addToConversationHistory(generatedText, 'light');
   if(products.length > 0) {
+    console.log("Product data: " + products[0]);
     addProductToChatHistory(products[0]);
   }
   return generatedText;
