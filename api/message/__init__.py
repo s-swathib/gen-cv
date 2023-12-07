@@ -111,6 +111,13 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     products = []
     
+    response_object={"messages":response}
+    
+    return func.HttpResponse(
+        json.dumps(response_object),
+        status_code=200
+    )
+
     try:
         response_message = response["choices"][0]["message"]
     except:
@@ -164,12 +171,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         
         response_message = response["choices"][0]["message"]
 
-    response_object={"messages":function_response}
     
-    return func.HttpResponse(
-        json.dumps(response_object),
-        status_code=200
-    )
     messages.append({'role' : response_message['role'], 'content' : response_message['content']})
 
     logging.info(json.dumps(response_message))
