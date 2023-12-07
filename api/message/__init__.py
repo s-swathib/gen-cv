@@ -195,7 +195,7 @@ def execute_sql_query(query, connection_string=database_connection_string, param
                 cursor.execute(query, params)
             else:
                 cursor.execute(query)
-                
+            return 'ExecuteSuccess'
             # If the query is a SELECT statement, fetch results
             if query.strip().upper().startswith('SELECT'):
                 results = cursor.fetchall()
