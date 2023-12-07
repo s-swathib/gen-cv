@@ -186,24 +186,24 @@ def execute_sql_query(query, connection_string=database_connection_string, param
     """Execute a SQL query and return the results."""
     
     results = []
-    
-    # Establish the connection
-    with pyodbc.connect(connection_string) as conn:
-        cursor = conn.cursor()
-        return 'cusrsorSuccess'
-            
-        if params:
-            cursor.execute(query, params)
-            return 'A'
-        else:
-            cursor.execute(query)
-            return 'B'
-            
-        # If the query is a SELECT statement, fetch results
-        if query.strip().upper().startswith('SELECT'):
-            results = cursor.fetchall()
-            
-        conn.commit()
+    try:
+        # Establish the connection
+        with pyodbc.connect(connection_string) as conn:
+            cursor = conn.cursor()
+                
+            if params:
+                cursor.execute(query, params)
+            else:
+                cursor.execute(query)
+                
+            # If the query is a SELECT statement, fetch results
+            if query.strip().upper().startswith('SELECT'):
+                results = cursor.fetchall()
+                
+            conn.commit()
+        return results
+    except:
+        return connection_string
 
     
 
