@@ -170,7 +170,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     #logging.info(json.dumps(response_message))
 
     response_object = {
-            "messages": function_response,
+            "messages": messages,
             "products": products
         }
 
@@ -200,7 +200,7 @@ def execute_sql_query(query, connection_string=database_connection_string, param
             results = cursor.fetchall()
          
         conn.commit()
-    
+
     return results
 
 
