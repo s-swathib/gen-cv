@@ -131,8 +131,12 @@ async function generateText(prompt) {
   let products
   console.log(`Input Message: ${JSON.stringify(messages)}`);
   await fetch(`/api/message`, { method: 'POST', headers: { 'Content-Type': 'application/json'}, body: JSON.stringify(messages) })
-  .then(response => response.text())
-  .then(data => console.log(data));
+  .then(response => response.json())
+  .then(data => {
+    generatedText = data["messages"][data["messages"].length - 1].content;
+    messages = data["messages"];
+    products = data["products"]
+  });
 
   //.then(console.log);
 
