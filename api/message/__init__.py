@@ -202,8 +202,9 @@ def execute_sql_query(query, connection_string=database_connection_string, param
                 
             conn.commit()
         return results
-    except:
-        return connection_string
+    except pyodbc.Error as ex:
+        sqlstate = ex.args[1]
+        return sqlstate
 
     
 
