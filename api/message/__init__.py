@@ -186,30 +186,24 @@ def execute_sql_query(query, connection_string=database_connection_string, param
     """Execute a SQL query and return the results."""
     
     results = []
-    try:
-        # Establish the connection
-        with pyodbc.connect(connection_string) as conn:
-            cursor = conn.cursor()
-                
-            if params:
-                cursor.execute(query, params)
-            else:
-                cursor.execute(query)
-            # If the query is a SELECT statement, fetch results
-            if query.strip().upper().startswith('SELECT'):
-                try:
-                    results = cursor.fetchall()
-                    return 'test'+results[0]
-                except Exception as e:
-                    return e
-                
-            conn.commit()
 
-    except Exception as ex:
-        sqlstate = ex.args[0]
-        return sqlstate
+    # Establish the connection
+    with pyodbc.connect(connection_string) as conn:
+        cursor = conn.cursor()
+                
+        if params:
+            cursor.execute(query, params)
+        else:
+            cursor.execute(query)
+        # If the query is a SELECT statement, fetch results
+        if query.strip().upper().startswith('SELECT'):
+            results = cursor.fetchall()
 
-    
+                
+        conn.commit()
+
+    return results
+
 
 def get_bonus_points(account_id):
     """Retrieve bonus points and its cash value for a given account ID."""
@@ -220,7 +214,7 @@ def get_bonus_points(account_id):
     # Execute the query with account_id as a parameter
     try:
         results = execute_sql_query(query, params=(account_id,))
-        return results
+        return str(type(results))
     except:
         return 'query failed'
 
