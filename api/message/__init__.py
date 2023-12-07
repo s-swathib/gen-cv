@@ -113,7 +113,8 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     try:
         response_message = response["choices"][0]["message"]
-        response_object={"messages":response}
+        
+        response_object={"messages":response_message}
     
         return func.HttpResponse(
             json.dumps(response_object),
