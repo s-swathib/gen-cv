@@ -110,16 +110,15 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     response = chat_complete(messages, functions= functions, function_call= "auto")
 
     products = []
-    
-    response_object={"messages":response}
-    
-    return func.HttpResponse(
-        json.dumps(response_object),
-        status_code=200
-    )
 
     try:
         response_message = response["choices"][0]["message"]
+        response_object={"messages":response}
+    
+        return func.HttpResponse(
+            json.dumps(response_object),
+            status_code=200
+        )
     except:
         logging.info(response)
 
