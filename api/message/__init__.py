@@ -212,16 +212,13 @@ def get_bonus_points(account_id):
     query = "SELECT loyalty_points FROM Customers WHERE account_id = ?"
 
     # Execute the query with account_id as a parameter
-    try:
-        results = execute_sql_query(query, params=(account_id,))
-        return str(type(results))
-    except:
-        return 'query failed'
 
+    results = execute_sql_query(query, params=(account_id,))
 
     # If results are empty, return an error message in JSON format
     if not results:
-        return json.dumps({"error": "Account not found"})
+        return 'empty'
+        #return json.dumps({"error": "Account not found"})
 
     # Get the loyalty_points value
     loyalty_points = results[0][0]
