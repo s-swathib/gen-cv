@@ -1,15 +1,13 @@
 {
   "scriptFile": "__init__.py",
+  "globalHeaders": {"Access-Control-Allow-Origin": "*","Access-Control-Allow-Methods": "POST, GET, OPTIONS"},
   "bindings": [
     {
       "authLevel": "anonymous",
       "type": "httpTrigger",
       "direction": "in",
       "name": "req",
-      "methods": ["GET","POST"],
-      "globalHeaders": {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "POST, GET, OPTIONS"}
+      "methods": ["GET","POST"]
     },
     {
       "type": "http",
