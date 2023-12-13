@@ -273,16 +273,14 @@ window.speak = (text) => {
   async function speak(text) {
     addToConversationHistory(text, 'dark')
     const url2 = 'https://languagedep.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/languages';
-
-    //const data = "{\"documents\": [{'id': '1','text': {text}}]}".replace("{text}",text);
-    const data = "{\"documents\": [{'id': '1','text': text}]}";
+    const requestBody = {'documents': [{'id': '1','text': text]};
     
     fetch(url2, {
       method: "POST",
       headers: {'Content-Type': 'application/json','Ocp-Apim-Subscription-Key': '9be55ef15c3d401e8a2efa6140bde1e0',},
-      body: data,
+      body: requestBody,
     })
-      .then(response => response.text())
+      .then(response => response['documents'][0]['detectedLanguage']['iso6391Name'])
       .then(async language => {
         console.log(`Detected language: ${language}`);
         console.log(`Sending this input to the generateText function: ${text}`);
