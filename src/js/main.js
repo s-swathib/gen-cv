@@ -228,7 +228,7 @@ window.startSession = () => {
   document.getElementById('playVideo').className = "round-button-hide"
   const url = 'https://westus2.api.cognitive.microsoft.com/sts/v1.0/issueToken';
 
-  const response = async fetch(url, {
+  const response = fetch(url, {
     method: 'POST',
     headers: {
       'Ocp-Apim-Subscription-Key': 'f22920f0f7d64ce39ec6aa9ab6ca06a1',
@@ -236,7 +236,7 @@ window.startSession = () => {
       'Content-Length': '0',
     },
   });
-  const text = await response.text();
+  const text = response.text();
   
   //fetch("/api/getSpeechToken", {
   //  method: "POST"
