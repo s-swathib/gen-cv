@@ -1,0 +1,28 @@
+{
+    "IsEncrypted": false,
+    "Values": {
+      "AzureWebJobsStorage": "aswarystorage",
+      "FUNCTIONS_WORKER_RUNTIME": "python",
+      "AZURE_OPENAI_CHAT_ENDPOINT": "https://openai-eastus-ash.openai.azure.com/",
+      "AZURE_OPENAI_CHAT_API_KEY": "f190928329c542efb55c99f2d78599ac",
+      "AZURE_OPENAI_EMBEDDING_ENDPOINT": "https://openai-southcentralus-ash.openai.azure.com/",
+      "AZURE_OPENAI_EMBEDDING_API_KEY": "d77dbfabf5184700a4865185e8e7eb06",
+      "AZURE_OPENAI_CHAT_DEPLOYMENT" : "at-gpt-35-turbo-0613",
+      "AZURE_OPENAI_EMBEDDINGS_DEPLOYMENT" : "ash-text-embedding-ada-002-v2",
+      "AZURE_OPENAI_API_VERSION" : "2023-07-01-preview",
+      "AZURE_SEARCH_ENDPOINT": "https://static-webapp-avatar.search.windows.net",
+      "AZURE_SEARCH_API_KEY": "GQemWa1Jk2KSO89crwqYbiaHFVh1OqVhMhrfYGvAfdAzSeCy37rz",
+      "AZURE_SEARCH_INDEX": "products",
+      "AZURE_SPEECH_REGION": "eastus",
+      "AZURE_SPEECH_API_KEY": "9b09c44fbb864053910463f02ebc0afb",
+      "TEXT_ANALYTICS_ENDPOINT": "https://languagedep.cognitiveservices.azure.com/",
+      "TEXT_ANALYTICS_KEY": "9be55ef15c3d401e8a2efa6140bde1e0",
+      "BLOB_SAS_URL": "https://aswarystorage.blob.core.windows.net/product-images?sp=r&st=2023-12-07T06:49:43Z&se=2024-06-30T14:49:43Z&sv=2022-11-02&sr=c&sig=rK2naO8XA%2BoHgMCS%2BSi68AiyXxGbOVSuSVO%2BNND6zrk%3D",
+      "SQL_DB_SERVER": "azavatarsqlserver.database.windows.net",
+      "SQL_DB_USER": "azavataradmin",
+      "SQL_DB_PASSWORD": "azavatar#1",
+      "SQL_DB_NAME": "azavatardb",
+      "ICE_CONNECTION_STRING": "endpoint=https://communicationservicedep.unitedstates.communication.azure.com/;accesskey=qcLFCxmZGSnqOdqqWB2autsTaDFNEjUP443SXU3meZoWVLNoeZVCsOnbttIXaR0/yN0Tsr7gql1+voER9xHU0Q=="
+    }
+
+  }
