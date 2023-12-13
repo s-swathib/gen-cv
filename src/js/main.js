@@ -14,7 +14,7 @@ var system_prompt = `You are an AI assistant focused on delivering brief product
 
 const TTSVoice = "en-US-JennyMultilingualNeural" // Update this value if you want to use a different voice
 
-const CogSvcRegion = "eastus" // Fill your Azure cognitive services region here, e.g. eastus
+const CogSvcRegion = "eastus" // Fill your Azure cognitive services region here, e.g. westus2
 
 const IceServerUrl = "turn:relay.communication.microsoft.com:3478" // Fill your ICE server URL here, e.g. turn:turn.azure.com:3478
 let IceServerUsername
@@ -226,18 +226,12 @@ window.startSession = () => {
 
   speechSynthesisConfig.speechSynthesisVoiceName = TTSVoice
   document.getElementById('playVideo').className = "round-button-hide"
-  const url1 = 'https://eastus.api.cognitive.microsoft.com/sts/v1.0/issueToken';
 
-  fetch(url1, {
-    method: "POST",
-    headers: {
-      'Ocp-Apim-Subscription-Key': 'f22920f0f7d64ce39ec6aa9ab6ca06a1',
-      'Content-Type': 'application/json',
-      'Content-Length': '0',
-    },
+  fetch("/api/getSpeechToken", {
+    method: "POST"
   })
     .then(response => response.text())
-    .then(response => {
+    .then(response => { 
       speechSynthesisConfig.authorizationToken = response;
       token = response
     })
@@ -245,6 +239,7 @@ window.startSession = () => {
       speechSynthesizer = new SpeechSDK.SpeechSynthesizer(speechSynthesisConfig, null)
       requestAnimationFrame(setupWebRTC)
     })
+
   
   // setupWebRTC()
 }
@@ -269,24 +264,19 @@ async function greeting() {
   })
 }
 
-window.speak = (words) => {
-  async function speak(words) {
-    addToConversationHistory(words, 'dark')
-    const url2 = 'https://languagedep.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/languages';
-    const obj = {documents: [{id: 1,text: words}]};
-    const requestBody = JSON.stringify(obj);
-    
-    fetch(url2, {
-      method: "POST",
-      headers: {'Content-Type': 'application/json','Ocp-Apim-Subscription-Key': '9be55ef15c3d401e8a2efa6140bde1e0',},
-      body: requestBody,
+window.speak = (text) => {
+  async function speak(text) {
+    addToConversationHistory(text, 'dark')
+
+    fetch("/api/detectLanguage?text="+text, {
+      method: "POST"
     })
-      .then(response => response['documents'][0]['detectedLanguage']['iso6391Name'])
+      .then(response => response.text())
       .then(async language => {
         console.log(`Detected language: ${language}`);
-        console.log(`Sending this input to the generateText function: ${words}`);
+        console.log(`Sending this input to the generateText function: ${text}`);
 
-        const generatedResult = await generateText(words);
+        const generatedResult = await generateText(text);
 
         console.log(`Called generatetext function sucessfully`);
         
@@ -315,7 +305,7 @@ window.speak = (words) => {
         console.error('Error:', error);
       });
   }
-  speak(words);
+  speak(text);
 }
 
 window.stopSession = () => {
@@ -336,10 +326,10 @@ window.startRecording = () => {
 
   recognizer.recognized = function (s, e) {
     if (e.result.reason === SpeechSDK.ResultReason.RecognizedSpeech) {
-      console.log('Recognized:', e.result.words);
+      console.log('Recognized:', e.result.text);
       window.stopRecording();
       // TODO: append to conversation
-      window.speak(e.result.words);
+      window.speak(e.result.text);
     }
   };
 
