@@ -228,29 +228,23 @@ window.startSession = () => {
   document.getElementById('playVideo').className = "round-button-hide"
   const url = 'https://westus2.api.cognitive.microsoft.com/sts/v1.0/issueToken';
 
-  const response = fetch(url, {
-    method: 'POST',
+  fetch(url, {
+    method: "POST",
     headers: {
       'Ocp-Apim-Subscription-Key': 'f22920f0f7d64ce39ec6aa9ab6ca06a1',
       'Content-Type': 'application/json',
       'Content-Length': '0',
     },
-  });
-  const text = response.text();
-  
-  //fetch("/api/getSpeechToken", {
-  //  method: "POST"
-  //})
-  //  .then(response => response.text())
-  //  .then(response => { 
-  speechSynthesisConfig.authorizationToken = text;
-  token = text
-   // })
-   // .then(() => {
-  speechSynthesizer = new SpeechSDK.SpeechSynthesizer(speechSynthesisConfig, null)
-  requestAnimationFrame(setupWebRTC)
-   // })
-
+  })
+    .then(response => response.text())
+    .then(response => {
+      speechSynthesisConfig.authorizationToken = response;
+      token = response
+    })
+    .then(() => {
+      speechSynthesizer = new SpeechSDK.SpeechSynthesizer(speechSynthesisConfig, null)
+      requestAnimationFrame(setupWebRTC)
+    })
   
   // setupWebRTC()
 }
