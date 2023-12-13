@@ -273,7 +273,7 @@ window.speak = (text) => {
   async function speak(text) {
     addToConversationHistory(text, 'dark')
     const url2 = 'https://languagedep.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/languages';
-    const requestBody = {'documents': [{'id': '1','text': text}]};
+    const requestBody = "{\"documents\": [{'id': '1','text': "${text}"}]}";
     
     fetch(url2, {
       method: "POST",
