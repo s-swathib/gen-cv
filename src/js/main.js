@@ -274,7 +274,8 @@ window.speak = (text) => {
     addToConversationHistory(text, 'dark')
     const url2 = 'https://languagedep.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/languages';
 
-    const data = "{\"documents\": [{'id': '1','text': {text}}]}".replace("{text}",text);
+    //const data = "{\"documents\": [{'id': '1','text': {text}}]}".replace("{text}",text);
+    const data = "{\"documents\": [{'id': '1','text': text}]}";
     
     fetch(url2, {
       method: "POST",
