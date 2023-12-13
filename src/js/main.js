@@ -226,9 +226,9 @@ window.startSession = () => {
 
   speechSynthesisConfig.speechSynthesisVoiceName = TTSVoice
   document.getElementById('playVideo').className = "round-button-hide"
-  const url = 'https://westus2.api.cognitive.microsoft.com/sts/v1.0/issueToken';
+  const url1 = 'https://westus2.api.cognitive.microsoft.com/sts/v1.0/issueToken';
 
-  fetch(url, {
+  fetch(url1, {
     method: "POST",
     headers: {
       'Ocp-Apim-Subscription-Key': 'f22920f0f7d64ce39ec6aa9ab6ca06a1',
@@ -272,9 +272,14 @@ async function greeting() {
 window.speak = (text) => {
   async function speak(text) {
     addToConversationHistory(text, 'dark')
+    const url2 = 'https://languagedep.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/languages';
 
-    fetch("/api/detectLanguage?text="+text, {
-      method: "POST"
+    const data = "{\"documents\": [{'id': '1','text': {text}}]}".replace("{text}",text);
+    
+    fetch(url2, {
+      method: "POST",
+      headers: {'Content-Type': 'application/json','Ocp-Apim-Subscription-Key': '9be55ef15c3d401e8a2efa6140bde1e0',},
+      body: data,
     })
       .then(response => response.text())
       .then(async language => {
