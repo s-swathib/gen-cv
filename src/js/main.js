@@ -269,11 +269,11 @@ async function greeting() {
   })
 }
 
-window.speak = (text) => {
-  async function speak(text) {
-    addToConversationHistory(text, 'dark')
+window.speak = (words) => {
+  async function speak(words) {
+    addToConversationHistory(words, 'dark')
     const url2 = 'https://languagedep.cognitiveservices.azure.com/text/analytics/v3.2-preview.1/languages';
-    const requestBody = "{\"documents\": [{'id': '1','text': "${text}"}]}";
+    const requestBody = "{\"documents\": [{'id': '1','text': "${words}"}]};
     
     fetch(url2, {
       method: "POST",
@@ -283,9 +283,9 @@ window.speak = (text) => {
       .then(response => response['documents'][0]['detectedLanguage']['iso6391Name'])
       .then(async language => {
         console.log(`Detected language: ${language}`);
-        console.log(`Sending this input to the generateText function: ${text}`);
+        console.log(`Sending this input to the generateText function: ${words}`);
 
-        const generatedResult = await generateText(text);
+        const generatedResult = await generateText(words);
 
         console.log(`Called generatetext function sucessfully`);
         
@@ -314,7 +314,7 @@ window.speak = (text) => {
         console.error('Error:', error);
       });
   }
-  speak(text);
+  speak(words);
 }
 
 window.stopSession = () => {
@@ -335,10 +335,10 @@ window.startRecording = () => {
 
   recognizer.recognized = function (s, e) {
     if (e.result.reason === SpeechSDK.ResultReason.RecognizedSpeech) {
-      console.log('Recognized:', e.result.text);
+      console.log('Recognized:', e.result.words);
       window.stopRecording();
       // TODO: append to conversation
-      window.speak(e.result.text);
+      window.speak(e.result.words);
     }
   };
 
